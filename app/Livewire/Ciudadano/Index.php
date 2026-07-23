@@ -59,6 +59,7 @@ class Index extends Component
         $this->apellido_paterno = $ciudadano->apellido_paterno;
         $this->apellido_materno = $ciudadano->apellido_materno;
         $this->curp = $ciudadano->curp;
+        $this->correo = $ciudadano->correo;
         $this->telefono = $ciudadano->telefono;
         $this->direccion = $ciudadano->direccion;
     }
