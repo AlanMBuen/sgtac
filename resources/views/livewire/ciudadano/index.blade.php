@@ -9,49 +9,49 @@
     <form wire:submit="crear">
         <div>
             <label>Nombre</label>
-            <input type="text", wire:model="nombre">
+            <input type="text" wire:model="nombre">
             @error('nombre') <span style="color: red">{{ $message }}</span>
             @enderror
         </div>
 
         <div>
             <label>Apellido Paterno</label>
-            <input type="text", wire:model="apellido_paterno">
+            <input type="text" wire:model="apellido_paterno">
             @error('apellido_paterno') <span style="color: red">{{ $message }}</span>
             @enderror
         </div>
 
         <div>
             <label>Apellido Materno</label>
-            <input type="text", wire:model="apellido_materno">
+            <input type="text" wire:model="apellido_materno">
             @error('apellido_materno') <span style="color: red">{{ $message }}</span>
             @enderror
         </div>
 
         <div>
             <label>CURP</label>
-            <input type="text", wire:model="curp">
+            <input type="text" wire:model="curp">
             @error('curp') <span style="color: red">{{ $message }}</span>
             @enderror
         </div>
 
         <div>
             <label>Correo</label>
-            <input type="text", wire:model="correo">
+            <input type="text" wire:model="correo">
             @error('correo') <span style="color: red">{{ $message }}</span>
             @enderror
         </div>
 
         <div>
             <label>Telefono</label>
-            <input type="text", wire:model="telefono">
+            <input type="text" wire:model="telefono">
             @error('telefono') <span style="color: red">{{ $message }}</span>
             @enderror
         </div>
 
         <div>
             <label>Direccion</label>
-            <input type="text", wire:model="direccion">
+            <input type="text" wire:model="direccion">
             @error('direccion') <span style="color: red">{{ $message }}</span>
             @enderror
         </div>
