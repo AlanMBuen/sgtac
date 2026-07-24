@@ -32,7 +32,9 @@
         @forelse($notaciudadanos as $notaciudadano)
             <hr>
             <div>
-                <p>{{ $notaciudadano->cuerpo }}</p>
+                <p>{{ $notaciudadano->cuerpo }}
+                    <span>{{ $notaciudadano->created_at->diffForHumans()}}</span>
+                </p>
                 <button wire:click="editar({{ $notaciudadano->id }})">Editar</button>
                 <button wire:click="eliminar({{ $notaciudadano->id }})">Eliminar</button>
             </div>

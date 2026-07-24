@@ -21,8 +21,8 @@ class Ciudadano extends Model
 
     public static function booted()
     {
-        static::deleted(function($ciudadano){
-            $ciudadano->notaciudadanos->delete();
+        static::deleting(function($ciudadano){
+            $ciudadano->notaciudadanos()->delete();
         });
     }
 

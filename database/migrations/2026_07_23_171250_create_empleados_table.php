@@ -1,0 +1,36 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('empleados', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('departamento_id')->constrained('departamentos')->onDelete('restrict');
+            $table->foreignId('puesto_id')->constrained('puestos')->onDelete('restrict');
+            $table->string('nombre');
+            $table->string('apellido_paterno');
+            $table->string('apellido_materno')->nullable();
+            $table->string('correo');
+            $table->string('telefono');
+            $table->integer('sueldo');
+            $table->softDeletes();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('empleados');
+    }
+};
