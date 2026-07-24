@@ -18,4 +18,13 @@ Route::view('profile', 'profile')
     Route::get('/departamentos', \App\Livewire\Departamento\Index::class)->name('departamentos.index');
     Route::get('/departamentos/{departamento}', \App\Livewire\Departamento\Detalles::class)->name('departamentos.detalles');
 
+    Route::get('/puestos', \App\Livewire\Puesto\Index::class)->name('puestos.index');
+    Route::get('/puestos/{puesto}', \App\Livewire\Puesto\Detalles::class)->name('puesto.detalles');
+
+    Route::get('/empleados', \App\Livewire\Empleado\Index::class)->name('empleados.index');
+    Route::get('/empleados/{empleado}', \App\Livewire\Empleado\Detalles::class)->name('empleados.detalles');
+
+    Route::get('/contratos', \App\Livewire\Contrato\Index::class)->name('contratos.index');
+    Route::get('/contratos/{contrato}', \App\Livewire\Contrato\Detalles::class)->name('contratos.detalles');
+
 require __DIR__.'/auth.php';

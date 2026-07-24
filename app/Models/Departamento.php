@@ -16,13 +16,18 @@ class Departamento extends Model
     ];
 
     protected static function booted(){
-        static::deleted(function($departamento){
-            $departamento->etiquetadepartamentos->delete();
+        static::deleting(function($departamento){
+            $departamento->etiquetadepartamentos()->delete();
         });
     }
 
     public function etiquetadepartamentos()
     {
         return $this->hasMany(Etiquetadepartamento::class)->latest();
+    }
+
+    public function empleados()
+    {
+        return $this->hasMany(Empleado::class)->latest();
     }
 }
