@@ -30,4 +30,8 @@ class Ciudadano extends Model
     {
         return $this->hasMany(Notaciudadano::class)->latest();
     }
+
+    public function tramites(){
+        return $this->hasMany(Tramite::class)->latest();
+    }
 }

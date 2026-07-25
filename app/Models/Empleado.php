@@ -23,7 +23,7 @@ class Empleado extends Model
     public static function booted(){
         static::deleting(function($empleado){
             $empleado->notaempleados()->delete();
-            $empleado->contrato->delete();
+            $empleado->contrato()->delete();
         });
     }
 
@@ -45,5 +45,10 @@ class Empleado extends Model
     public function contrato()
     {
         return $this->hasOne(Contrato::class);
+    }
+
+    public function tramites()
+    {
+        return $this->hasMany(Tramite::class)->latest();
     }
 }
