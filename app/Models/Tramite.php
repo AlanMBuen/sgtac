@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Tramite extends Model
 {
-
+    use SoftDeletes;
+    
     protected $fillable = [
         'tipotramite_id',
         'ciudadano_id',

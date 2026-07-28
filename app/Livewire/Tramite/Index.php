@@ -22,9 +22,8 @@ class Index extends Component
         return [
             'tipotramite_id' => 'required|exists:tipotramites,id',
             'ciudadano_id' => 'required|exists:ciudadanos,id',
-            'asignado_id' => 'nullable|exists:asignados,id',
-            'folio' => 'required|string|max:255|unique:tramites,folio' . $this->editando_id,
-            'estado' => 'required|in:aprobado,rechazado,entregado',
+            'asignado_id' => 'nullable|exists:empleados,id',
+            'folio' => 'required|string|max:255|unique:tramites,folio,' . $this->editando_id,
             'fecha_limite' => 'required|date',
         ];
     }
@@ -38,11 +37,11 @@ class Index extends Component
             'ciudadano_id' => $this->ciudadano_id,
             'asignado_id' => $this->asignado_id,
             'folio' => $this->folio,
-            'estado' => $this->estado,
             'fecha_limite' => $this->fecha_limite,
         ];
 
         if($this->editando_id){
+            $datos['estado'] = $this->estado;
             Tramite::find($this->editando_id)->update($datos);
             session()->flash('mensaje','Tramite editado');
         } else {
@@ -77,10 +76,10 @@ class Index extends Component
     public function render()
     {
         return view('livewire.tramite.index',[
-            'tramites' => Tramite::orderBy('nombre')->latest()->get(),
+            'tramites' => Tramite::latest()->get(),
             'tipotramites' => Tipotramite::orderBy('nombre')->latest()->get(),
             'ciudadanos' => Ciudadano::orderBy('nombre')->latest()->get(),
-            'asignado' => Empleado::orderBy('nombre')->latest()->get(),
+            'asignados' => Empleado::orderBy('nombre')->latest()->get(),
         ]);
     }
 }

@@ -54,6 +54,8 @@ class Index extends Component
             Empleado::create($datos);
             session()->flash('mensaje','Empleado creado correctamente');
         }
+
+        $this->cancelarEdicion();
     }
 
     public function editar(Empleado $empleado){

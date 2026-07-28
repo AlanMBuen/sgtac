@@ -42,6 +42,8 @@ class Detalles extends Component
             Notaciudadano::create($datos);
             session()->flash('mensaje','Nota creada correctamente');
         }
+
+        $this->cancelarEdicion();
     }
 
     public function editar(Notaciudadano $notaciudadano)
