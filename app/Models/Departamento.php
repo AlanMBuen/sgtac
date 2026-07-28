@@ -30,4 +30,9 @@ class Departamento extends Model
     {
         return $this->hasMany(Empleado::class)->latest();
     }
+
+    public function tipotramites()
+    {
+        return $this->hasMany(Tipotramite::class)->latest();
+    }
 }

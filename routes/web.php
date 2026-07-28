@@ -27,4 +27,7 @@ Route::view('profile', 'profile')
     Route::get('/contratos', \App\Livewire\Contrato\Index::class)->name('contratos.index');
     Route::get('/contratos/{contrato}', \App\Livewire\Contrato\Detalles::class)->name('contratos.detalles');
 
+    Route::get('/tipotramites', \App\Livewire\TipoTramite\Index::class)->name('tipotramites.index');
+    Route::get('/tipotramites/{tipotramite}', \App\Livewire\TipoTramite\Detalles::class)->name('tipotramites.detalles');
+
 require __DIR__.'/auth.php';
