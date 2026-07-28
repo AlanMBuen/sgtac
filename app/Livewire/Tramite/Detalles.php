@@ -23,7 +23,7 @@ class Detalles extends Component
     protected function rules(): array {
         return [
             'tramite_id' => 'required|exists:tramites,id',
-            'empleado_id' => 'required|exists:empleado,id',
+            'empleado_id' => 'required|exists:empleados,id',
             'mensaje' => 'required|string|max:1000'
         ];
     }
@@ -35,7 +35,7 @@ class Detalles extends Component
         $datos = [
             'tramite_id' => $this->tramite_id,
             'empleado_id' => $this->empleado_id,
-            'mensaje' => $this->contenido
+            'mensaje' => $this->mensaje
         ];
 
         if($this->editando_id){
@@ -45,6 +45,8 @@ class Detalles extends Component
             Comentariotramite::create($datos);
             session()->flash('mensaje', 'Comentario del tramite creado');
         }
+
+        $this->cancelarEdicion();
     }
 
     public function editar(Comentariotramite $comentariotramite)
@@ -63,7 +65,7 @@ class Detalles extends Component
 
     public function cancelarEdicion()
     {
-        $this->reset(['editando_id', 'contenido', 'empleado_id']);
+        $this->reset(['editando_id', 'mensaje', 'empleado_id']);
     }
 
     public function render()

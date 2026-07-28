@@ -41,6 +41,8 @@ class Detalles extends Component
             Notatipotramite::create($datos);
             session()->flash('mensaje', 'Nota del Tipo de tramite creado');
         }
+
+        $this->cancelarEdicion();
     }
 
     public function editar(Notatipotramite $notatipotramite)

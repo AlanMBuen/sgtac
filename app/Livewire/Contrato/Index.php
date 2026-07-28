@@ -44,6 +44,7 @@ class Index extends Component
             Contrato::create($datos);
             session()->flash('mensaje','Contrato creado correctamente');
         }
+        $this->cancelarEdicion();
     }
 
     public function editar(Contrato $contrato){
@@ -67,7 +68,7 @@ class Index extends Component
     public function render()
     {
         return view('livewire.contrato.index',[
-            'contratos' => Contrato::orderBy('nombre')->latest()->get(),
+            'contratos' => Contrato::latest()->get(),
             'empleados' => Empleado::orderBy('nombre')->latest()->get(),
         ]);
     }
