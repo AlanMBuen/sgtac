@@ -45,6 +45,8 @@ class Detalles extends Component
             Responsabilidadespuesto::create($datos);
             session()->flash('mensaje','Responsabilidad creada correctamente');
         }
+
+        $this->cancelarEdicion();
     }
 
     public function editar(Responsabilidadespuesto $responsabilidadespuesto)

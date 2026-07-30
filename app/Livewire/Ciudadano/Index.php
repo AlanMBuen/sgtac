@@ -31,7 +31,7 @@ class Index extends Component
             'nombre' => 'required|string|max:255',
             'apellido_paterno' => 'required|string|max:255',
             'apellido_materno' => 'nullable|string|max:255',
-            'curp' => 'required|string|max:20|min:18|unique:ciudadanos,curp' . $this->editando_id,
+            'curp' => 'required|string|max:20|min:18|unique:ciudadanos,curp,' . $this->editando_id,
             'correo' => 'nullable|string|max:255',
             'telefono' => 'nullable|string|max:16',
             'direccion' => 'nullable|string|max:1000',

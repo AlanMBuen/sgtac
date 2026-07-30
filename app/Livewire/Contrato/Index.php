@@ -51,6 +51,7 @@ class Index extends Component
             Contrato::create($datos);
             session()->flash('mensaje','Contrato creado correctamente');
         }
+        $this->cancelarEdicion();
     }
 
     public function editar(Contrato $contrato){

@@ -24,7 +24,7 @@ class Index extends Component
     {
         return [
             'nombre' => 'required|string|max:255',
-            'clave' => 'required|string|max:16|unique:puestos,clave' . $this->editando_id,
+            'clave' => 'required|string|max:16|unique:puestos,clave,' . $this->editando_id,
             'descripcion' => 'nullable|string|max:1000'
         ];
     }
