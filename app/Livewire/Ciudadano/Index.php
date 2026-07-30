@@ -4,9 +4,12 @@ namespace App\Livewire\Ciudadano;
 
 use App\Models\Ciudadano;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Index extends Component
 {
+    use WithPagination;
+
     public string $nombre = '';
     public string $apellido_paterno = '';
     public string $apellido_materno = '';
@@ -16,6 +19,12 @@ class Index extends Component
     public string $direccion = '';
 
     public ?int $editando_id = null;
+    public string $buscar = '';
+
+    public function updatingBuscar()
+    {
+        $this->resetPage();
+    }
 
     protected function rules(): array {
         return [
@@ -75,8 +84,18 @@ class Index extends Component
 
     public function render()
     {
+        $query = Ciudadano::query();
+
+        if(!empty($this->buscar)){
+            $query->where(function($q) {
+                $q->where('nombre', 'LIKE', '%' . $this->buscar . '%')
+                  ->orWhere('curp', 'LIKE', '%' . $this->buscar . '%')
+                  ->orWhere('apellido_paterno', 'LIKE', '%' . $this->buscar . '%');
+            });
+        }
+
         return view('livewire.ciudadano.index',[
-            'ciudadanos' => Ciudadano::orderBy('nombre')->latest()->get(),
+            'ciudadanos' => $query->orderBy('nombre')->latest()->paginate(10),
         ]);
     }
 }

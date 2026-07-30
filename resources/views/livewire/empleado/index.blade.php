@@ -76,6 +76,12 @@
         @endif
     </form>
 
+    <hr>
+
+    <div>
+        <input type="text" wire:model.live="buscar" placeholder="Busca por nombre, departamento o puesto" class="form-control">
+    </div>
+
     <table>
         <thead>
             <tr>
@@ -102,4 +108,8 @@
             @endforelse
         </tbody>
     </table>
+
+    <div>
+        {{ $empleados->links() }}
+    </div>
 </div>

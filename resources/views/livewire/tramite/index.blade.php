@@ -74,6 +74,10 @@
     </form>
 
     <hr>
+
+    <div>
+        <input type="text" wire:model.live="buscar" placeholder="Buscar por Folio, empleado o estudiante" class="form-control">
+    </div>
     
     <table>
         <thead>
@@ -101,4 +105,8 @@
             @endforelse
         </tbody>
     </table>
+
+    <div>
+        {{ $tramite->links() }}
+    </div>
 </div>

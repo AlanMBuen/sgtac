@@ -5,15 +5,22 @@ namespace App\Livewire\Contrato;
 use App\Models\Contrato;
 use App\Models\Empleado;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Index extends Component
 {
+    use WithPagination;
     public string $empleado_id = '';
     public int $periodo = 0;
     public string $estado = '';
     public string $fecha_inicio = '';
     public string $fecha_termino = '';
     public ?int $editando_id = null;
+    public string $buscar = '';
+
+    public function updating(){
+        $this->resetPage();
+    }
 
     protected function rules(): array 
     {
@@ -67,8 +74,20 @@ class Index extends Component
 
     public function render()
     {
+        $query = Contrato::query();
+        if(!empty($this->buscar)){
+            $query->where(function($q){
+                $q->where('estado', 'LIKE', '%' . $this->buscar . '%')
+
+                ->orWhereHas('empleado', function($queryEmp) {
+                    $queryEmp->where('nombre', 'LIKE', '%' . $this->buscar . '%');
+                });
+
+            });
+        }
+
         return view('livewire.contrato.index',[
-            'contratos' => Contrato::latest()->get(),
+            'contratos' => $query->orderBy('nombre')->latest()->paginate(10),
             'empleados' => Empleado::orderBy('nombre')->latest()->get(),
         ]);
     }

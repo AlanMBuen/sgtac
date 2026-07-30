@@ -4,13 +4,21 @@ namespace App\Livewire\Departamento;
 
 use App\Models\Departamento;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Index extends Component
 {
+    use WithPagination;
     public string $nombre = '';
     public string $descripcion = '';
     public string $direccion = '';
     public ?int $editando_id = null;
+    public string $buscar = '';
+
+    public function updating()
+    {
+        $this->resetPage();
+    }
 
     protected function rules(): array
     {
@@ -63,8 +71,16 @@ class Index extends Component
 
     public function render()
     {
+        $query = Departamento::query();
+        if(!empty($this->buscar)){
+            $query->where(function($q){
+                $q->where('nombre', 'LIKE', '%' . $this->buscar . '%')
+                  ->orWhere('direccion', 'LIKE', '%' . $this->buscar . '%');
+            });
+        }
+
         return view('livewire.departamento.index',[
-            'departamentos' => Departamento::orderBy('nombre')->latest()->get(),
+            'departamentos' => $query->orderBy('nombre')->latest()->paginate(10),
         ]);
     }
 }
