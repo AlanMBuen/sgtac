@@ -4,13 +4,21 @@ namespace App\Livewire\Puesto;
 
 use App\Models\Puesto;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Index extends Component
 {
+    use WithPagination;
     public string $nombre = '';
     public string $clave = '';
     public string $descripcion = '';
     public ?int $editando_id = null;
+    public string $buscar = '';
+
+    public function updating()
+    {
+        $this->resetPage();
+    }
 
     protected function rules(): array 
     {
@@ -57,8 +65,16 @@ class Index extends Component
 
     public function render()
     {
+        $query = Puesto::query();
+        if(!empty($this->buscar)){
+            $query->where(function($q){
+                $q->where('nombre', 'LIKE', '%' . $this->buscar . '%')
+                  ->orWhere('clave', 'LIKE', '%' . $this->buscar . '%');
+            });
+        }
+
         return view('livewire.puesto.index',[
-            'puestos' => Puesto::orderBy('nombre')->latest()->get(),
+            'puestos' => $query->orderBy('nombre')->latest()->paginate(10),
         ]);
     }
 }

@@ -38,6 +38,10 @@
 
     <hr>
 
+    <div>
+        <input type="text" wire:model.live="buscar" placeholder="Buscar por nombre o direccion" class="form-control">
+    </div>
+
     <h3>Departamentos Activos</h3>
 
     <table>
@@ -62,4 +66,8 @@
             @endforelse
         </tbody>
     </table>
+
+    <div>
+        {{$departamentos->links()}}
+    </div>
 </div>

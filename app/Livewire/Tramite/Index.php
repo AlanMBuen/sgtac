@@ -7,9 +7,11 @@ use App\Models\Empleado;
 use App\Models\Tipotramite;
 use App\Models\Tramite;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Index extends Component
 {
+    use WithPagination;
     public string $tipotramite_id = '';
     public string $ciudadano_id = '';
     public ?string $asignado_id = '';
@@ -17,6 +19,11 @@ class Index extends Component
     public string $estado = '';
     public string $fecha_limite = '';
     public ?int $editando_id = null;
+    public string $buscar = '';
+
+    public function upditing(){
+        $this->resetPage();
+    }
 
     protected function rules(): array {
         return [
@@ -76,8 +83,29 @@ class Index extends Component
     }
     public function render()
     {
+
+        $query = Tramite::query();
+        if(!empty($this->buscar)){
+            $query->where(function($q){
+                $q->where('folio', 'LIKE', '%' . $this->buscar . '%')
+                  ->orWhere('estado', 'LIKE', '%' . $this->buscar . '%')
+                
+                  ->orWhereHas('empleado', function($queryEmp){
+                    $queryEmp->where('nombre', 'LIKE', '%' . $this->buscar . '%');
+                  })
+
+                  ->orWhereHas('tipotramite', function($queryTip){
+                    $queryTip->where('nombre', 'LIKE', '%' . $this->buscar . '%');
+                  })
+
+                  ->orWhereHas('ciudadano', function($queryCiu){
+                    $queryCiu->where('nombre', 'LIKE', '%' . $this->buscar . '%');
+                  });
+            });
+        }
+
         return view('livewire.tramite.index',[
-            'tramites' => Tramite::orderBy('nombre')->latest()->get(),
+            'tramites' => $query->orderBy('nombre')->latest()->paginate(10),
             'tipotramites' => Tipotramite::orderBy('nombre')->latest()->get(),
             'ciudadanos' => Ciudadano::orderBy('nombre')->latest()->get(),
             'asignado' => Empleado::orderBy('nombre')->latest()->get(),

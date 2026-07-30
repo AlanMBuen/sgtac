@@ -63,6 +63,12 @@
         @endif
     </form>
 
+    <hr>
+
+    <div class="mb-4">
+        <input type="text" wire:model.live="buscar" placeholder="Busca por nombre o CURP" class="form-control">
+    </div>
+
     <table>
         <thead>
             <tr>
@@ -91,4 +97,8 @@
             @endforelse
         </tbody>
     </table>
+
+    <div class="mt-4">
+        {{ $ciudadanos->links() }}
+    </div>
 </div>

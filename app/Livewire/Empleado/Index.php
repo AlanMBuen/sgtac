@@ -6,9 +6,11 @@ use App\Models\Departamento;
 use App\Models\Empleado;
 use App\Models\Puesto;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Index extends Component
 {
+    use WithPagination;
     public string $departamento_id = '';
     public string $puesto_id = '';
     public string $nombre = '';
@@ -18,6 +20,12 @@ class Index extends Component
     public string $telefono = '';
     public int $sueldo = 0;
     public ?int $editando_id = null;
+    public string $buscar = '';
+
+    public function updating()
+    {
+        $this->resetPage();
+    }
 
     protected function rules(): array 
     {
@@ -54,6 +62,8 @@ class Index extends Component
             Empleado::create($datos);
             session()->flash('mensaje','Empleado creado correctamente');
         }
+
+        $this->cancelarEdicion();
     }
 
     public function editar(Empleado $empleado){
@@ -79,8 +89,25 @@ class Index extends Component
 
     public function render()
     {
+        $query = Empleado::query();
+
+        if(!empty($this->buscar)){
+            $query->where(function ($q){
+                $q->where('nombre', 'LIKE', '%' . $this->buscar . '%')
+                  ->orWhere('apellido_paterno', 'LIKE', '%' . $this->buscar . '%')
+
+                  ->orWhereHas('puesto', function($queryPuesto) {
+                    $queryPuesto->where('nombre', 'LIKE', '%' . $this->buscar . '%');
+                  })
+
+                  ->orWhereHas('departamento', function($queryDep) {
+                    $queryDep->where('nombre', 'LIKE', '%' . $this->buscar . '%');
+                  });
+            });
+        }
+
         return view('livewire.empleado.index',[
-            'empleados' => Empleado::orderBy('nombre')->latest()->get(),
+            'empleados' => $query->orderBy('nombre')->latest()->paginate(10),
             'departamentos' => Departamento::orderBy('nombre')->latest()->get(),
             'puestos' => Puesto::orderBy('nombre')->latest()->get(),
         ]);

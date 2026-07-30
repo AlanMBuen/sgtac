@@ -49,6 +49,10 @@
     </form>
 
     <hr>
+
+    <div>
+        <input type="text" wire:model.live="buscar" placeholder="Buscar por nombre, periodo o departamento" class="form-control">
+    </div>
     
     <table>
         <thead>
@@ -76,4 +80,8 @@
             @endforelse
         </tbody>
     </table>
+
+    <div>
+        {{ $tipotramites->links() }}
+    </div>
 </div>

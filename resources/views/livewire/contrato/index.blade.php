@@ -55,6 +55,10 @@
         @endif
     </form>
 
+    <hr>
+
+    <input type="text" wire:model.live="buscar" placeholder="Buscar por empleado o estado" class="form-control">
+
     <table>
         <thead>
             <tr>
@@ -81,4 +85,8 @@
             @endforelse
         </tbody>
     </table>
+
+    <div>
+        {{ $contratos->links() }}
+    </div>
 </div>

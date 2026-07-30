@@ -5,14 +5,21 @@ namespace App\Livewire\TipoTramite;
 use App\Models\Departamento;
 use App\Models\Tipotramite;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Index extends Component
 {
+    use WithPagination;
     public string $departamento_id = '';
     public string $nombre = '';
     public ?string $descripcion = '';
     public ?int $duracion = null;
     public ?int $editando_id = null;
+    public string $buscar = '';
+
+    public function updating(){
+        $this->resetPage();
+    }
 
     protected function rules(): array {
         return [
@@ -67,8 +74,21 @@ class Index extends Component
 
     public function render()
     {
+        $query = Tipotramite::query();
+
+        if(!empty($this->buscar)){
+            $query -> where(function($q){
+                $q->where('nombre', 'LIKE', '%' . $this->buscar . '%')
+                  ->orWhere('duracion', 'LIKE', '%' . $this->buscar . '%')
+
+                  ->orWhereHas('departamento', function($queryDep){
+                    $queryDep ->where('departamento', 'LIKE', '%' . $this->buscar . '%');
+                  });
+            });
+        }
+
         return view('livewire.tipo-tramite.index',[
-            'tipotramites' => Tipotramite::orderBy('nombre')->latest()->get(),
+            'tipotramites' => Tipotramite::orderBy('nombre')->latest()->paginate(10),
             'departamentos' => Departamento::orderBy('nombre')->latest()->get(),
         ]);
     }
